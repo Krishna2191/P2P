@@ -1,0 +1,42 @@
+I5_P2P
+
+import java.sql.*;
+
+public class ExampleSqlJdbc {
+
+    public static void main(String[] args) {
+
+        // Setting.
+        String connectionUrl = "jdbc:sqlserver://in482021s.database.windows.net:1433;database=in482021;encrypt=true;trustServerCertificate=true;";
+        String user = "i5_admin@in482021s";
+        String pass = "teami5@2021";
+
+        // Declare the JDBC object.
+        Connection conn = null;
+        Statement insertrow = null;
+        Statement selectStmt = null;
+        try {
+            // Establish the connection.
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            conn = DriverManager.getConnection(connectionUrl, user, pass);
+            System.out.println(conn);
+            
+            /* Insert Statement */
+            insertrow = conn.createStatement();
+            insertrow.execute("INSERT INTO lender (lid) VALUES (20)");
+            insertrow.execute("INSERT INTO lender (lid) VALUES (21)");
+            
+            /* Create Statement */
+            selectStmt = conn.createStatement();
+            ResultSet rs = selectStmt.executeQuery("SELECT lid from lender");
+            while(rs.next())
+            {
+                System.out.println(rs.getString(1));    //First Column
+               
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
